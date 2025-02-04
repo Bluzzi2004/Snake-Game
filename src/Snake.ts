@@ -1,35 +1,73 @@
-import display from "./display";
+import Point from "./Point";
 
 // place your code on line 5 above the export statement below
 
+//Class representing the snake
 class Snake {
-  private currentPosition: number;
-  private currentDirection: number;
+  private currentPosition: Point;
+  private currentDirection: 'up'|'down'|'left'|'right';
   constructor() {
-    this.currentPosition = 0;
-    this.currentDirection = 1; //The snake is initially facing forward
+    this.currentPosition = new Point(0, 0);
+    this.currentDirection = 'right'; //The snake is initially facing right
   }
-  public move(squares: number) {
-    if (this.currentDirection == 1) {
-      this.currentPosition = this.currentPosition + squares;
+  //Method for turning left
+  public turnLeft() {
+    if (this.currentDirection === 'right') {
+      this.currentDirection = 'up';
+    }
+    else if (this.currentDirection === 'up') {
+      this.currentDirection = 'left';
+    }
+    else if (this.currentDirection === 'left') {
+      this.currentDirection = 'down';
+    }
+    else if (this.currentDirection === 'down') {
+      this.currentDirection = 'right';
+    }
   }
-    else {
-      this.currentPosition = this.currentPosition - squares;
+  //Method for turning right
+  public turnRight() {
+    if (this.currentDirection === 'right') {
+      this.currentDirection = 'down';
+    }
+    else if (this.currentDirection === 'down') {
+      this.currentDirection = 'left';
+    }
+    else if (this.currentDirection === 'left') {
+      this.currentDirection = 'up';
+    }
+    else if (this.currentDirection === 'up') {
+      this.currentDirection = 'right';
+    }
   }
-    display("The snake has moved to square: " + this.currentPosition);
+  //Method for moving
+  public move(steps: number) {
+    if (this.currentDirection === 'right') {
+      this.currentPosition = new Point(this.currentPosition.x + steps, this.currentPosition.y);
+    }
+    else if (this.currentDirection === 'left') {
+      this.currentPosition = new Point(this.currentPosition.x - steps, this.currentPosition.y);
+    }
+    else if (this.currentDirection === 'up') {
+      this.currentPosition = new Point(this.currentPosition.x, this.currentPosition.y + steps);
+    }
+    else if (this.currentDirection === 'down') {
+      this.currentPosition = new Point(this.currentPosition.x, this.currentPosition.y - steps);
+    }
   }
-  public turn() {
-    if (this.currentDirection == 1) {
-      this.currentDirection = -1; //Turn backwards
+  //Retrives the position on the x axis
+  public get xcoord() {
+    return this.currentPosition.x;
   }
-    else {
-      this.currentDirection = 1; //Turn forward
+  //Retrives the position on the y axis
+  public get ycoord() {
+    return this.currentPosition.y;
   }
-    display("The snake has turned. Current direction: " + this.currentDirection);
-  }
-  public get position() {
-    return this.currentPosition;
-  }
-}
+  /**
+   * @deprecated
+   */
+  /**public turn()*/ 
+    // Deprecated method
+} 
 
 export default Snake;

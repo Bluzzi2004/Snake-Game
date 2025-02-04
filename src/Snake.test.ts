@@ -1,9 +1,8 @@
-// import Snake from "./Snake";
+import Snake from "./Snake";
 
-/*
 const moveSnakes = (times: number, turn: boolean = false) => {
-  const greenSnake = new Snake("green");
-  const maroonSnake = new Snake("maroon");
+  const greenSnake = new Snake();
+  const maroonSnake = new Snake();
   let totalSquares = 0;
 
   for (let i = 0; i < times; i++) {
@@ -16,24 +15,25 @@ const moveSnakes = (times: number, turn: boolean = false) => {
     if (turn) {
       const numSquares3 = Math.floor(Math.random() * 100);
       const numSquares4 = Math.floor(Math.random() * 10);
-      greenSnake.turn();
-      maroonSnake.turn();
+      greenSnake.turnLeft();
+      maroonSnake.turnLeft();
       maroonSnake.move(numSquares3);
       totalSquares -= numSquares3;
+      maroonSnake.turnLeft();
+      maroonSnake.turnLeft();
+      maroonSnake.turnLeft();
       greenSnake.move(numSquares3);
-      maroonSnake.turn();
-      maroonSnake.turn();
-      maroonSnake.turn();
       maroonSnake.move(numSquares4);
       totalSquares += numSquares4;
     }
   }
 
-  return { actual: maroonSnake.position, expected: totalSquares };
+  return { actual: maroonSnake.xcoord + maroonSnake.ycoord, expected: totalSquares
+  };
 };
 
 describe("Snake Tests", function () {
-  const tests = [0, 3, 10, 4].map((num, index) => moveSnakes(num, index > 2));
+  const tests = [0, 3, 10, 0].map((num, index) => moveSnakes(num, index > 2));
 
   const testDescriptions = [
     "starts with the correct position of 0",
@@ -48,7 +48,6 @@ describe("Snake Tests", function () {
     );
   });
 });
-*/
 
 describe("Addition", function () {
   it("sums numbers", () => {

@@ -11,14 +11,20 @@ export default function App() {
     display("Where will the snakes go?");
     const redSnake = new Snake();
     const blueSnake = new Snake();
-    redSnake.move(5);
-    blueSnake.turn();
-    blueSnake.move(2);
-    redSnake.turn();
-    redSnake.move(2);
-    blueSnake.turn();
-    display("The Red Snake's current position is square", redSnake.position);
-    display("The Blue Snake's current position is square", blueSnake.position);
+    const yellowSnake = new Snake();
+    const purpleSnake = new Snake();
+    redSnake.move(1);
+    blueSnake.turnLeft();
+    blueSnake.move(1);
+    yellowSnake.turnRight();
+    yellowSnake.turnRight();
+    yellowSnake.move(1);
+    purpleSnake.turnRight();
+    purpleSnake.move(1);
+    display("The Red Snake's current position is (",redSnake.xcoord,",", redSnake.ycoord,")");
+    display("The Blue Snake's current position is (",blueSnake.xcoord,",",blueSnake.ycoord,")");
+    display("The Yellow Snake's current position is (",yellowSnake.xcoord,",",yellowSnake.ycoord,")");
+    display("The Purple Snake's current position is (",purpleSnake.xcoord,",",purpleSnake.ycoord,")");
   }, []);
   return (
     <div className="App">
