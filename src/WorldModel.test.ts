@@ -7,7 +7,7 @@ describe('WorldModel', () => {
 
   beforeEach(() => {
     snake = new Snake();
-    worldModel = new WorldModel(snake);
+    worldModel = new WorldModel(snake, 100, 100);
   });
 
   test('should move the snake correctly', () => {

@@ -15,6 +15,9 @@ class Point {
     get y(): number {
         return this.ycoord;
     }
+    toString() {
+        return '('+this.x+','+this.y+')';
+    }
 }
 
 export default Point;

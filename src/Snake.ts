@@ -55,6 +55,14 @@ class Snake {
       this.currentPosition = new Point(this.currentPosition.x, this.currentPosition.y - steps);
     }
   }
+  //Retrives the x and y position
+  public get position() {
+    return this.currentPosition;
+  }
+  //Retrives the direction that is being faced
+  public get direction() {
+    return this.currentDirection;
+  }
   //Retrives the position on the x axis
   public get xcoord() {
     return this.currentPosition.x;

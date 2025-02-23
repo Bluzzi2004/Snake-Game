@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import Display from "./ConsoleDisplay";
 import display from "./display";
 import Snake from "./Snake";
+import WorldModel from "./WorldModel";
 
 export default function App() {
   useEffect(() => {
@@ -13,6 +14,8 @@ export default function App() {
     const blueSnake = new Snake();
     const yellowSnake = new Snake();
     const purpleSnake = new Snake();
+    const worldSnake = new Snake();
+    const worldModel = new WorldModel(worldSnake, 100, 100);
     redSnake.move(1);
     blueSnake.turnLeft();
     blueSnake.move(1);
@@ -21,10 +24,14 @@ export default function App() {
     yellowSnake.move(1);
     purpleSnake.turnRight();
     purpleSnake.move(1);
-    display("The Red Snake's current position is (",redSnake.xcoord,",", redSnake.ycoord,")");
-    display("The Blue Snake's current position is (",blueSnake.xcoord,",",blueSnake.ycoord,")");
-    display("The Yellow Snake's current position is (",yellowSnake.xcoord,",",yellowSnake.ycoord,")");
-    display("The Purple Snake's current position is (",purpleSnake.xcoord,",",purpleSnake.ycoord,")");
+    worldModel.update(1);
+    worldSnake.turnLeft();
+    worldModel.update(1);
+    display("The Red Snake's current position is",redSnake.position);
+    display("The Blue Snake's current position is",blueSnake.position);
+    display("The Yellow Snake's current position is",yellowSnake.position);
+    display("The Purple Snake's current position is",purpleSnake.position);
+    display("The World Snake's current position is",worldSnake.position);
   }, []);
   return (
     <div className="App">
