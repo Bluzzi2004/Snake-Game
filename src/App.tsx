@@ -4,6 +4,7 @@ import Display from "./ConsoleDisplay";
 import display from "./display";
 import Snake from "./Snake";
 import WorldModel from "./WorldModel";
+import canvasWorldView from "./CanvasWorldView";
 
 export default function App() {
   useEffect(() => {
@@ -15,18 +16,10 @@ export default function App() {
     const yellowSnake = new Snake();
     const purpleSnake = new Snake();
     const worldSnake = new Snake();
-    const worldModel = new WorldModel(worldSnake, 100, 100);
-    redSnake.move(1);
-    blueSnake.turnLeft();
-    blueSnake.move(1);
-    yellowSnake.turnRight();
-    yellowSnake.turnRight();
-    yellowSnake.move(1);
-    purpleSnake.turnRight();
-    purpleSnake.move(1);
-    worldModel.update(1);
-    worldSnake.turnLeft();
-    worldModel.update(1);
+    const worldModel = new WorldModel(worldSnake, 10, 10);
+    const CanvasWorldView = new canvasWorldView(50)
+    worldModel.view = CanvasWorldView;
+    worldModel.update(0);
     display("The Red Snake's current position is",redSnake.position);
     display("The Blue Snake's current position is",blueSnake.position);
     display("The Yellow Snake's current position is",yellowSnake.position);
