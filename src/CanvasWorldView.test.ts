@@ -29,11 +29,4 @@ describe("CanvasWorldView", () => {
         expect(canvasWorldView.getCanvas().width).toBe(200);
         expect(canvasWorldView.getCanvas().height).toBe(200);
     });
-
-    test("should fill the canvas with cyan color", () => {
-        const spy = jest.spyOn(canvasWorldView.getContext(), 'fillRect');
-        canvasWorldView.display(worldModel);
-        expect(spy).toHaveBeenCalledWith(0, 0, 200, 200);
-        expect(canvasWorldView.getContext().fillStyle).toBe('cyan');
-    });
 });

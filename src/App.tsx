@@ -5,25 +5,30 @@ import display from "./display";
 import Snake from "./Snake";
 import WorldModel from "./WorldModel";
 import canvasWorldView from "./CanvasWorldView";
+import SnakeController from "./SnakeController";
+import AvoidWallsPlayer from "./AvoidWallsPlayer";
+import LRKeyInputHandler from "./LRKeyInputHandler";
+import HumanPlayer from "./HumanPlayer";
+import GameController from "./GameController";
 
 export default function App() {
   useEffect(() => {
     // Include your display statements to test below
     document.getElementById("output")!.innerText = "OUTPUT:\n";
     display("Where will the snakes go?");
-    const redSnake = new Snake();
-    const blueSnake = new Snake();
-    const yellowSnake = new Snake();
-    const purpleSnake = new Snake();
     const worldSnake = new Snake();
-    const worldModel = new WorldModel(worldSnake, 10, 10);
-    const CanvasWorldView = new canvasWorldView(50)
+    const worldModel = new WorldModel(worldSnake, 50, 50);
+    const CanvasWorldView = new canvasWorldView(10)
     worldModel.view = CanvasWorldView;
     worldModel.update(0);
-    display("The Red Snake's current position is",redSnake.position);
-    display("The Blue Snake's current position is",blueSnake.position);
-    display("The Yellow Snake's current position is",yellowSnake.position);
-    display("The Purple Snake's current position is",purpleSnake.position);
+    const snakeController = new SnakeController(worldModel, worldSnake);
+    const inputHandler = new LRKeyInputHandler();
+    const humanPlayer = new HumanPlayer(snakeController, inputHandler);
+    const avoidWallsPlayer = new AvoidWallsPlayer(snakeController);
+    const gameController = new GameController(worldModel);
+    gameController.setPlayer1(humanPlayer);
+    gameController.setPlayer2(avoidWallsPlayer);
+    gameController.run();
     display("The World Snake's current position is",worldSnake.position);
   }, []);
   return (

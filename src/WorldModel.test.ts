@@ -20,14 +20,14 @@ describe('WorldModel', () => {
     snake.turnLeft();
     worldModel.update(3);
     expect(snake.xcoord).toBe(0);
-    expect(snake.ycoord).toBe(3);
+    expect(snake.ycoord).toBe(-3);
   });
 
   test('should turn the snake right and move', () => {
     snake.turnRight();
     worldModel.update(2);
     expect(snake.xcoord).toBe(0);
-    expect(snake.ycoord).toBe(-2);
+    expect(snake.ycoord).toBe(2);
   });
 });
 

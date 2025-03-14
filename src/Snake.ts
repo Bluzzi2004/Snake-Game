@@ -49,10 +49,10 @@ class Snake {
       this.currentPosition = new Point(this.currentPosition.x - steps, this.currentPosition.y);
     }
     else if (this.currentDirection === 'up') {
-      this.currentPosition = new Point(this.currentPosition.x, this.currentPosition.y + steps);
+      this.currentPosition = new Point(this.currentPosition.x, this.currentPosition.y - steps);
     }
     else if (this.currentDirection === 'down') {
-      this.currentPosition = new Point(this.currentPosition.x, this.currentPosition.y - steps);
+      this.currentPosition = new Point(this.currentPosition.x, this.currentPosition.y + steps);
     }
   }
   //Retrives the x and y position
