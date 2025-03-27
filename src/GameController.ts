@@ -8,22 +8,22 @@ class GameController {
     constructor(world: WorldModel) {
         this.world_ = world;
     }
-    setPlayer1(player: Player): void {
+    set player1(player: Player) {
         this.player1_ = player;
     }
-    setPlayer2(player: Player): void {
+    set player2(player: Player) {
         this.player2_ = player;
     }
+    //Update this to not use performance.now, so it takes an input
     run(): void {
         let lastTime = 0
-        const updateFrame = () => {
+        const updateFrame = (currentTime: number): void => {
+            const elapsedTime = currentTime - lastTime
             if (this.player1_) this.player1_.makeTurn();
             if (this.player2_) this.player2_.makeTurn();
-            const currentTime = performance.now();
-            const elapsedTime = currentTime -lastTime;
-            if (elapsedTime > 250) {
+            if (elapsedTime >= 250) {
                 this.world_.update(1);
-                lastTime = lastTime + 250;
+                lastTime = currentTime;
             }
             requestAnimationFrame(updateFrame);
         }

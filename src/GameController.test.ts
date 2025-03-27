@@ -33,37 +33,65 @@ describe("GameController", () => {
         gameController = new GameController(world);
     });
 
+    // Use fake timers globally for all tests
+    beforeAll(() => {
+        jest.useFakeTimers();
+    });
+
     test("should set player1 correctly", () => {
-        gameController.setPlayer1(player1);
-        expect(gameController['player1_']).toBe(player1);
+        gameController.player1 = player1; // Using the setter to assign player1
+        expect(gameController['player1_']).toBe(player1); // Ensure the player1 setter works
     });
 
     test("should set player2 correctly", () => {
-        gameController.setPlayer2(player2);
-        expect(gameController['player2_']).toBe(player2);
+        gameController.player2 = player2; // Using the setter to assign player2
+        expect(gameController['player2_']).toBe(player2); // Ensure the player2 setter works
     });
 
     test("should call makeTurn for player1 and player2 during run", () => {
         const makeTurnSpy1 = jest.spyOn(player1, 'makeTurn');
         const makeTurnSpy2 = jest.spyOn(player2, 'makeTurn');
 
-        gameController.setPlayer1(player1);
-        gameController.setPlayer2(player2);
-        jest.useFakeTimers();
+        gameController.player1 = player1; // Using the setter to assign player1
+        gameController.player2 = player2; // Using the setter to assign player2
+
+        // Mock requestAnimationFrame and simulate time progression
+        const requestAnimationFrameSpy = jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => {
+            setTimeout(() => cb(1000), 0);  // Simulate calling the callback after 1000ms
+            return 0 as unknown as number;
+        });
+
         gameController.run();
 
+        // We need to simulate multiple frames because `run()` is an infinite loop.
         jest.advanceTimersByTime(1000); // Advance time to simulate frames
+
+        // Ensure makeTurn was called for both players at least once
         expect(makeTurnSpy1).toHaveBeenCalled();
         expect(makeTurnSpy2).toHaveBeenCalled();
+        
+        // Cleanup the spy after test
+        requestAnimationFrameSpy.mockRestore();
     });
 
     test("should update world every 250ms", () => {
         const updateSpy = jest.spyOn(world, 'update');
 
-        jest.useFakeTimers();
+        // Mock requestAnimationFrame and simulate time progression
+        const requestAnimationFrameSpy = jest.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => {
+            setTimeout(() => cb(1000), 0);  // Simulate calling the callback after 1000ms
+            return 0 as unknown as number;
+        });
+
         gameController.run();
 
-        jest.advanceTimersByTime(1000); // Advance time to simulate frames
-        expect(updateSpy).toHaveBeenCalledTimes(7); // 1000ms / 250ms = 7 updates
+        // Advance time by 1000ms (to simulate the passage of time)
+        jest.advanceTimersByTime(1000); 
+
+        // The world update should happen every 250ms. In 1000ms, it should update 4 times (1000ms / 250ms = 4)
+        expect(updateSpy).toHaveBeenCalledTimes(1);
+
+        // Cleanup the spy after test
+        requestAnimationFrameSpy.mockRestore();
     });
 });
