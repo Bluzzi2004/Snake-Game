@@ -2,6 +2,7 @@ import Snake from './Snake';
 import WorldModel from './WorldModel';
 import SnakeController from './SnakeController';
 import AvoidWallsPlayer from './AvoidWallsPlayer';
+import Point from "./Point";
 
 describe('AvoidWallsPlayer', () => {
     let snake: Snake;
@@ -10,8 +11,8 @@ describe('AvoidWallsPlayer', () => {
     let player: AvoidWallsPlayer;
 
     beforeEach(() => {
-        snake = new Snake();
-        worldModel = new WorldModel(snake, 10, 10); 
+        snake = new Snake(new Point (1, 1), 3);
+        worldModel = new WorldModel(); 
         snakeController = new SnakeController(worldModel, snake);
         player = new AvoidWallsPlayer(snakeController);
     });

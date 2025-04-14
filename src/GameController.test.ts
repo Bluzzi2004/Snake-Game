@@ -3,6 +3,7 @@ import Snake from "./Snake";
 import SnakeController from "./SnakeController";
 import WorldModel from "./WorldModel";
 import Player from "./Player";
+import Point from "./Point";
 
 // Concrete subclass of Player for testing
 class TestPlayer extends Player {
@@ -25,8 +26,8 @@ describe("GameController", () => {
     let testController: SnakeController;
 
     beforeEach(() => {
-        world = new WorldModel(new Snake(), 10, 10); // Initialize world with a new Snake
-        testSnake = new Snake(); // Initialize testSnake
+        world = new WorldModel(); // Initialize world with a new Snake
+        testSnake = new Snake(new Point (1, 1), 3); // Initialize testSnake
         testController = new SnakeController(world, testSnake); // Initialize testController
         player1 = new TestPlayer(testController);  // Instantiate the concrete TestPlayer class
         player2 = new TestPlayer(testController);  // Instantiate the concrete TestPlayer class

@@ -1,11 +1,9 @@
 import CanvasWorldView from './CanvasWorldView';
 import WorldModel from './WorldModel';
-import Snake from './Snake';
 
 describe("CanvasWorldView", () => {
     let canvasWorldView: CanvasWorldView;
     let worldModel: WorldModel;
-    const subSnake = new Snake();
 
     beforeEach(() => {
         const canvasMock = document.createElement("canvas");
@@ -17,7 +15,7 @@ describe("CanvasWorldView", () => {
         canvasWorldView = new CanvasWorldView(2);
         canvasWorldView['worldCanvas'] = canvasMock;
         canvasWorldView['context'] = contextMock as CanvasRenderingContext2D;
-        worldModel = new WorldModel(subSnake, 100, 100);
+        worldModel = new WorldModel();
     });
 
     test("should create a canvas element", () => {
@@ -26,7 +24,7 @@ describe("CanvasWorldView", () => {
 
     test("should set canvas dimensions based on world model", () => {
         canvasWorldView.display(worldModel);
-        expect(canvasWorldView.getCanvas().width).toBe(200);
-        expect(canvasWorldView.getCanvas().height).toBe(200);
+        expect(canvasWorldView.getCanvas().width).toBe(100);
+        expect(canvasWorldView.getCanvas().height).toBe(100);
     });
 });

@@ -18,6 +18,10 @@ class Point {
     toString() {
         return '('+this.x+','+this.y+')';
     }
+    /**Checks if the two points are equal*/
+    equals(p: Point): boolean {
+        return this.x === p.x && this.y === p.y
+    }
 }
 
 export default Point;

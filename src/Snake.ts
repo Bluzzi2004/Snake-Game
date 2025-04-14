@@ -4,10 +4,13 @@ import Point from "./Point";
 
 //Class representing the snake
 class Snake {
-  private currentPosition: Point;
+  private currentParts: Point[];
   private currentDirection: 'up'|'down'|'left'|'right';
-  constructor() {
-    this.currentPosition = new Point(0, 0);
+  constructor(startPosition: Point, size: number) {
+    this.currentParts = [startPosition];
+    for (let i = 1; i < size; i++) {
+      this.currentParts.push(new Point(startPosition.x - i, startPosition.y))
+    }
     this.currentDirection = 'right'; //The snake is initially facing right
   }
   //Method for turning left
@@ -42,22 +45,25 @@ class Snake {
   }
   //Method for moving
   public move(steps: number) {
+    for (let i = this.currentParts.length - 1; i > 0; i--) {
+      this.currentParts[i] = this.currentParts[i - 1]
+    }
     if (this.currentDirection === 'right') {
-      this.currentPosition = new Point(this.currentPosition.x + steps, this.currentPosition.y);
+      this.currentParts[0] = new Point(this.currentParts[0].x + steps, this.currentParts[0].y);
     }
     else if (this.currentDirection === 'left') {
-      this.currentPosition = new Point(this.currentPosition.x - steps, this.currentPosition.y);
+      this.currentParts[0] = new Point(this.currentParts[0].x - steps, this.currentParts[0].y);
     }
     else if (this.currentDirection === 'up') {
-      this.currentPosition = new Point(this.currentPosition.x, this.currentPosition.y - steps);
+      this.currentParts[0] = new Point(this.currentParts[0].x, this.currentParts[0].y - steps);
     }
     else if (this.currentDirection === 'down') {
-      this.currentPosition = new Point(this.currentPosition.x, this.currentPosition.y + steps);
+      this.currentParts[0] = new Point(this.currentParts[0].x, this.currentParts[0].y + steps);
     }
   }
   //Retrives the x and y position
   public get position() {
-    return this.currentPosition;
+    return this.currentParts[0];
   }
   //Retrives the direction that is being faced
   public get direction() {
@@ -65,11 +71,19 @@ class Snake {
   }
   //Retrives the position on the x axis
   public get xcoord() {
-    return this.currentPosition.x;
+    return this.currentParts[0].x;
   }
   //Retrives the position on the y axis
   public get ycoord() {
-    return this.currentPosition.y;
+    return this.currentParts[0].y;
+  }
+  //Retrieve all parts of the snake
+  public get allParts() {
+    return this.currentParts;
+  }
+  public didCollide(s: Snake): boolean {
+    const head = this.currentParts[0];
+    return s.allParts.slice(1).some(part => part.equals(head)) || this.allParts.slice(1).some(part => part.equals(head));
   }
   /**
    * @deprecated

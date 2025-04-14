@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect } from "react";
 import Display from "./ConsoleDisplay";
 import display from "./display";
+import Point from "./Point";
 import Snake from "./Snake";
 import WorldModel from "./WorldModel";
 import CanvasWorldView from "./CanvasWorldView";
@@ -16,20 +17,17 @@ export default function App() {
     // Include your display statements to test below
     document.getElementById("output")!.innerText = "OUTPUT:\n";
     display("Where will the snakes go?");
-    const worldSnake = new Snake();
-    const worldModel = new WorldModel(worldSnake, 50, 50);
-    const canvasWorldView = new CanvasWorldView(10)
-    worldModel.view = canvasWorldView;
-    worldModel.update(0);
-    const snakeController = new SnakeController(worldModel, worldSnake);
-    const inputHandler = new LRKeyInputHandler();
-    const humanPlayer = new HumanPlayer(snakeController, inputHandler);
-    const avoidWallsPlayer = new AvoidWallsPlayer(snakeController);
-    const gameController = new GameController(worldModel);
-    gameController.player1 = humanPlayer;
-    gameController.player2 = avoidWallsPlayer;
+    const world = new WorldModel();
+    const startingPoint = new Point(0, 0);
+    const snake = new Snake(startingPoint, 5);
+    world.addSnake(snake);
+    const canvasView = new CanvasWorldView(10);
+    world.addView(canvasView);
+    const snakeController = new SnakeController(world, snake);
+    const Player = new AvoidWallsPlayer(snakeController);
+    const gameController = new GameController(world);
+    gameController.player1 = Player;
     gameController.run();
-    display("The World Snake's current position is",worldSnake.position);
   }, []);
   return (
     <div className="App">

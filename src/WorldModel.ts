@@ -2,30 +2,50 @@ import Snake from "./Snake";
 import IWorldView from "./IWorldView";
 
 class WorldModel {
-    private snake_: Snake;
+    private allSnakes_: Snake[] = [];
     private width_: number;
     private height_: number;
-    private worldView_: IWorldView | null = null;
-    //Takes snake as parameter
-    constructor(snake: Snake, width: number, height: number) {
-        this.snake_ = snake;
-        this.width_ = width;
-        this.height_ = height;
+    private allViews_: IWorldView[] = [];
+    constructor() {
+        this.width_ = 50;
+        this.height_ = 50;
     }
-    public set view(worldView: IWorldView) {
-        this.worldView_ = worldView;
+    public addSnake(s: Snake) {
+        this.allSnakes_.push(s);
+    }
+    public addView(v: IWorldView) {
+        this.allViews_.push(v);
+    }
+    public get allSnakes(): Snake[] {
+        return this.allSnakes_;
     }
     //Updates the snake's position
     update(steps: number) {
-        this.snake_.move(steps);
-        if (this.worldView_ !== null) {
-            this.worldView_.display(this);
+        this.allSnakes_.forEach(snake => snake.move(steps));
+        const collidedSnakes: Snake[] = [];
+        for (let i = 0; i < this.allSnakes_.length; i++) {
+            for (let j = i + 1; j < this.allSnakes.length; j++) {
+                if (!collidedSnakes.includes(this.allSnakes_[i])) {
+                    collidedSnakes.push(this.allSnakes_[i]);
+                }
+                else if (!collidedSnakes.includes(this.allSnakes_[j])) {
+                    collidedSnakes.push(this.allSnakes_[j]);
+                }
+            }
         }
+        collidedSnakes.forEach(snake => {
+            const index = this.allSnakes_.indexOf(snake);
+            if (index > -1) {
+                this.allSnakes_.splice(index, 1);
+            }
+        })
+        this.allViews_.forEach(view => {
+            if (view !== null) {
+                view.display(this);
+            }
+        })
     }
     //Retrieve the snake
-    public get snake(): Snake {
-        return this.snake_;
-    }
     public get width(): number {
         return this.width_;
     }

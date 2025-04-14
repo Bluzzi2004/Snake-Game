@@ -1,6 +1,7 @@
 import SnakeController from "./SnakeController";
 import Snake from "./Snake";
 import WorldModel from "./WorldModel";
+import Point from "./Point";
 
 describe("SnakeController", () => {
     let snakeWorld: WorldModel;
@@ -8,8 +9,8 @@ describe("SnakeController", () => {
     let snakeController: SnakeController;
 
     beforeEach(() => {
-        snakeWorld = new WorldModel(snake, 10, 10);
-        snake = new Snake();
+        snakeWorld = new WorldModel();
+        snake = new Snake(new Point(0, 0), 3);
         snakeController = new SnakeController(snakeWorld, snake);
     });
 

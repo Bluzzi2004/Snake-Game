@@ -3,6 +3,7 @@ import SnakeController from "./SnakeController";
 import IInputHandler from "./IInputHandler";
 import WorldModel from "./WorldModel";
 import Snake from "./Snake";
+import Point from "./Point";
 
 describe("HumanPlayer", () => {
     let snakeController: SnakeController;
@@ -12,8 +13,8 @@ describe("HumanPlayer", () => {
     let testSnake: Snake;
 
     beforeEach(() => {
-        testModel = new WorldModel(testSnake, 10, 10); // Instantiate WorldModel
-        testSnake = new Snake(); // Instantiate Snake
+        testModel = new WorldModel(); // Instantiate WorldModel
+        testSnake = new Snake(new Point(1, 1), 3); // Instantiate Snake
         snakeController = new SnakeController(testModel, testSnake);
         
         // Mocking the turnSnakeLeft and turnSnakeRight methods
